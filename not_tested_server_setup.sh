@@ -28,6 +28,7 @@ clear
 echo "apt update and install"
 apt update && apt upgrade -y && apt autoremove -y
 apt install ufw fail2ban -y 
+mkdir /root/script_backupfiles/
 clear
 #
 # Password
@@ -49,7 +50,7 @@ ssh-keygen -f /etc/ssh/key1rsa -t rsa -b 4096 -N ""
 ssh-keygen -f /etc/ssh/key2ecdsa -t ecdsa -b 521 -N ""
 ssh-keygen -f /etc/ssh/key3ed25519 -t ed25519 -N ""
 clear
-mv /etc/ssh/sshd_config /etc/ssh/sshd_config.orig
+mv /etc/ssh/sshd_config /root/script_backupfiles/sshd_config.orig
 echo "Port $sshport
 HostKey /etc/ssh/key1rsa
 HostKey /etc/ssh/key2ecdsa
@@ -97,7 +98,7 @@ backend = %(sshd_backend)s
 maxretry = 3
 banaction = ufw
 findtime = 3600
-bantime = 2678400
+bantime = 172800
 " >> /etc/fail2ban/jail.d/ssh.conf
 sed -i "/blocktype = reject/c\blocktype = deny" /etc/fail2ban/action.d/ufw.conf
 clear
@@ -105,6 +106,22 @@ clear
 # Updates
 #
 echo "unattended-upgrades"
+mv /etc/apt/apt.conf.d/50unattended-upgrades /root/script_backupfiles/50unattended-upgrades.orig
+echo "Unattended-Upgrade::Allowed-Origins {
+        "${distro_id}:${distro_codename}";
+	"${distro_id}:${distro_codename}-security";
+	"${distro_id}ESM:${distro_codename}";
+//	"${distro_id}:${distro_codename}-updates";
+//	"${distro_id}:${distro_codename}-proposed";
+//	"${distro_id}:${distro_codename}-backports";
+};
+Unattended-Upgrade::Package-Blacklist {
+};
+Unattended-Upgrade::DevRelease "false";
+Unattended-Upgrade::Remove-Unused-Dependencies "true";
+Unattended-Upgrade::Automatic-Reboot "true";
+Unattended-Upgrade::Automatic-Reboot-Time "02:22";
+" >> /etc/apt/apt.conf.d/50unattended-upgrades
 nano /etc/apt/apt.conf.d/50unattended-upgrades
 #
 #misc
@@ -116,7 +133,8 @@ clear
 #
 # END
 #
-systemctl enable ufw
 systemctl enable fail2ban.service
 read -p "Press enter to reboot"
+ufw --force enable
+ufw reload
 reboot
