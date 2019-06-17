@@ -35,7 +35,7 @@ echo "Set root password - long 32 char one"
 echo "This script creates a random password with GPG"
 randompasswd=$(gpg --gen-random --armor 2 32)
 echo "Random Password $randompasswd"
-passwd 
+passwd $randompasswd
 read -p "Press enter to continue"
 clear
 #
