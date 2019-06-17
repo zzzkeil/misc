@@ -36,6 +36,7 @@ echo "This script creates a random password with GPG"
 randompasswd=$(gpg --gen-random --armor 2 32)
 echo "Random Password $randompasswd"
 passwd $randompasswd
+read -p "Press enter to continue"
 clear
 #
 # SSH
@@ -60,6 +61,7 @@ PermitEmptyPasswords no
 PrintMotd no
 AcceptEnv LANG LC_*
 Subsystem	sftp	/usr/lib/openssh/sftp-server" >> /etc/ssh/sshd_config
+read -p "Press enter to continue"
 clear
 #
 # UFW
@@ -71,6 +73,7 @@ ufw allow $sshport/tcp
 ufw allow out 80
 ufw allow out 443
 ufw allow out 53
+read -p "Press enter to continue"
 clear
 #
 # fail2ban
@@ -89,6 +92,7 @@ findtime = 3600
 bantime = 2678400
 " >> /etc/fail2ban/jail.d/ssh.conf
 sed -i "/blocktype = reject/c\blocktype = deny" /etc/fail2ban/action.d/ufw.conf
+read -p "Press enter to continue"
 clear
 #
 # END
