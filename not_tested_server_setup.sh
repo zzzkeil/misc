@@ -4,7 +4,6 @@ echo " ###########################################"
 echo " # Setup server config Netcup Ubuntu 18.04 #"
 echo " # root passwd,ssh,fail2ban,ufw,network    #"
 echo " # !!!!!!!!!! Automatic reboot !!!!!!!!!!! #"
-echo " # Not tested for now, maybe not working   #"
 echo " ###########################################"
 echo ""
 echo ""
@@ -69,7 +68,7 @@ clear
 # Network
 #
 echo "Set network config"
-read -p "Your hostname" -e -i host hostnamex
+read -p "Your hostname :" -e -i remotehost hostnamex
 hostnamectl set-hostname $hostnamex
 nano /etc/netplan/50-cloud-init.yaml
 clear
@@ -101,6 +100,18 @@ findtime = 3600
 bantime = 2678400
 " >> /etc/fail2ban/jail.d/ssh.conf
 sed -i "/blocktype = reject/c\blocktype = deny" /etc/fail2ban/action.d/ufw.conf
+clear
+#
+# Updates
+#
+echo "unattended-upgrades"
+nano /etc/apt/apt.conf.d/50unattended-upgrades
+#
+#misc
+#
+echo "Clear some stuff"
+chmod -x /etc/update-motd.d/10-help-text
+chmod -x /etc/update-motd.d/50-motd-news
 clear
 #
 # END
