@@ -2,7 +2,7 @@
 clear
 echo " ###########################################"
 echo " # Setup server config Netcup Ubuntu 18.04 #"
-echo " # root passwd,ssh,fail2ban,ufw,network    #"
+echo " # passwd,ssh,fail2ban,ufw,network,updates #"
 echo " # !!!!!!!!!! Automatic reboot !!!!!!!!!!! #"
 echo " ###########################################"
 echo ""
@@ -21,7 +21,7 @@ if [[ "$EUID" -ne 0 ]]; then
 	echo "Sorry, you need to run this as root"
 	exit 1
 fi
-clear
+
 #
 # APT
 #
@@ -29,7 +29,7 @@ echo "apt update and install"
 apt update && apt upgrade -y && apt autoremove -y
 apt install ufw fail2ban -y 
 mkdir /root/script_backupfiles/
-clear
+
 #
 # Password
 #
@@ -40,7 +40,7 @@ echo "Random Password  - mark it once, right mouse klick, enter, and again !"
 echo "$randompasswd"
 passwd
 read -p "Press enter to continue / on fail press CRTL+C"
-clear
+
 #
 # SSH
 #
@@ -49,7 +49,7 @@ read -p "Choose your SSH Port: (default 22) " -e -i 555 sshport
 ssh-keygen -f /etc/ssh/key1rsa -t rsa -b 4096 -N ""
 ssh-keygen -f /etc/ssh/key2ecdsa -t ecdsa -b 521 -N ""
 ssh-keygen -f /etc/ssh/key3ed25519 -t ed25519 -N ""
-clear
+
 mv /etc/ssh/sshd_config /root/script_backupfiles/sshd_config.orig
 echo "Port $sshport
 HostKey /etc/ssh/key1rsa
@@ -64,7 +64,7 @@ PermitEmptyPasswords no
 PrintMotd no
 AcceptEnv LANG LC_*
 Subsystem	sftp	/usr/lib/openssh/sftp-server" >> /etc/ssh/sshd_config
-clear
+
 #
 # Network
 #
@@ -72,7 +72,7 @@ echo "Set network config"
 read -p "Your hostname :" -e -i remotehost hostnamex
 hostnamectl set-hostname $hostnamex
 nano /etc/netplan/50-cloud-init.yaml
-clear
+
 #
 # UFW
 #
@@ -83,7 +83,7 @@ ufw allow $sshport/tcp
 ufw allow out 80
 ufw allow out 443
 ufw allow out 53
-clear
+
 #
 # fail2ban
 #
@@ -101,7 +101,7 @@ findtime = 3600
 bantime = 172800
 " >> /etc/fail2ban/jail.d/ssh.conf
 sed -i "/blocktype = reject/c\blocktype = deny" /etc/fail2ban/action.d/ufw.conf
-clear
+
 #
 # Updates
 #
@@ -123,13 +123,14 @@ Unattended-Upgrade::Automatic-Reboot "true";
 Unattended-Upgrade::Automatic-Reboot-Time "02:22";
 " >> /etc/apt/apt.conf.d/50unattended-upgrades
 nano /etc/apt/apt.conf.d/50unattended-upgrades
+
 #
 #misc
 #
 echo "Clear some stuff"
 chmod -x /etc/update-motd.d/10-help-text
 chmod -x /etc/update-motd.d/50-motd-news
-clear
+
 #
 # END
 #
