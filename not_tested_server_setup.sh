@@ -35,7 +35,7 @@ clear
 #
 echo "Set root password"
 echo "This script creates a random password - use it, or not"
-randompasswd=$(gpg --gen-random --armor 2 44)
+randompasswd=$(</dev/urandom tr -dc 'A-Za-z0-9!"#$%&'\''()*+,-./:;<=>?@[\]^_`{|}~' | head -c 44  ; echo)
 echo "Random Password  - mark it once, right mouse klick, enter, and again !"
 echo "$randompasswd"
 passwd
