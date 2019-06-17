@@ -1,9 +1,11 @@
 #!/bin/bash
 clear
-echo " ####################################################################"
-echo " # Setup server config Netcup Ubuntu 18.04- passwd,ssh,fail2ban,ufw #"
-echo " # Not tested for now, maybe not working                            #"
-echo " ####################################################################"
+echo " ###########################################"
+echo " # Setup server config Netcup Ubuntu 18.04 #"
+echo " # root passwd,ssh,fail2ban,ufw,network    #"
+echo " # !!!!!!!!!! Automatic reboot !!!!!!!!!!! #"
+echo " # Not tested for now, maybe not working   #"
+echo " ###########################################"
 echo ""
 echo ""
 echo "To EXIT this script press  [ENTER]"
@@ -33,7 +35,7 @@ clear
 #
 echo "Set root password"
 echo "This script creates a random password - use it, or not"
-randompasswd=$(gpg --gen-random --armor 2 36)
+randompasswd=$(gpg --gen-random --armor 2 44)
 echo "Random Password  - mark it once, press enter, and paste it again !"
 echo "$randompasswd"
 passwd
@@ -62,6 +64,12 @@ PermitEmptyPasswords no
 PrintMotd no
 AcceptEnv LANG LC_*
 Subsystem	sftp	/usr/lib/openssh/sftp-server" >> /etc/ssh/sshd_config
+clear
+#
+# Network
+#
+echo "Set network config"
+nano /etc/netplan/50-cloud-init.yaml
 clear
 #
 # UFW
@@ -95,9 +103,8 @@ clear
 #
 # END
 #
-
 ufw --force enable
 ufw reload
-systemctl restart sshd.service
 systemctl enable fail2ban.service
-systemctl start fail2ban.service
+read -p "Press enter to reboot"
+reboot
