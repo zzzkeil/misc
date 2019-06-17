@@ -36,7 +36,7 @@ clear
 echo "Set root password"
 echo "This script creates a random password - use it, or not"
 randompasswd=$(gpg --gen-random --armor 2 44)
-echo "Random Password  - mark it once, press enter, and paste it again !"
+echo "Random Password  - mark it once, right mouse klick, enter, and again !"
 echo "$randompasswd"
 passwd
 read -p "Press enter to continue / on fail press CRTL+C"
@@ -69,6 +69,8 @@ clear
 # Network
 #
 echo "Set network config"
+read -p "Your hostname" -e -i host hostnamex
+hostnamectl set-hostname $hostnamex
 nano /etc/netplan/50-cloud-init.yaml
 clear
 #
@@ -103,8 +105,7 @@ clear
 #
 # END
 #
-ufw --force enable
-ufw reload
+systemctl enable ufw
 systemctl enable fail2ban.service
 read -p "Press enter to reboot"
 reboot
