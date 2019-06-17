@@ -107,7 +107,7 @@ sed -i "/blocktype = reject/c\blocktype = deny" /etc/fail2ban/action.d/ufw.conf
 #
 echo "unattended-upgrades"
 mv /etc/apt/apt.conf.d/50unattended-upgrades /root/script_backupfiles/50unattended-upgrades.orig
-echo "Unattended-Upgrade::Allowed-Origins {
+echo 'Unattended-Upgrade::Allowed-Origins {
         "${distro_id}:${distro_codename}";
 	"${distro_id}:${distro_codename}-security";
 	"${distro_id}ESM:${distro_codename}";
@@ -121,7 +121,7 @@ Unattended-Upgrade::DevRelease "false";
 Unattended-Upgrade::Remove-Unused-Dependencies "true";
 Unattended-Upgrade::Automatic-Reboot "true";
 Unattended-Upgrade::Automatic-Reboot-Time "02:22";
-" >> /etc/apt/apt.conf.d/50unattended-upgrades
+' >> /etc/apt/apt.conf.d/50unattended-upgrades
 nano /etc/apt/apt.conf.d/50unattended-upgrades
 
 #
