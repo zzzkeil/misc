@@ -31,11 +31,12 @@ clear
 #
 # Password
 #
-echo "Set root password - long 32 char one"
-echo "This script creates a random password with GPG"
+echo "Set root password"
+echo "This script creates a random password - use it, or not"
 randompasswd=$(gpg --gen-random --armor 2 32)
-echo "Random Password $randompasswd"
-passwd $randompasswd
+echo "Random Password :"
+echo "$randompasswd"
+passwd
 read -p "Press enter to continue"
 clear
 #
