@@ -130,6 +130,7 @@ clear
 echo "Clear some stuff"
 chmod -x /etc/update-motd.d/10-help-text
 chmod -x /etc/update-motd.d/50-motd-news
+chmod -x /etc/update-motd.d/80-livepatch
 clear
 #
 # END
