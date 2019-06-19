@@ -45,7 +45,7 @@ clear
 # SSH
 #
 echo "Set ssh config"
-read -p "Choose your SSH Port: (default 22) " -e -i 555 sshport
+read -p "Choose your SSH Port: (default 22) " -e -i 2222 sshport
 ssh-keygen -f /etc/ssh/key1rsa -t rsa -b 4096 -N ""
 ssh-keygen -f /etc/ssh/key2ecdsa -t ecdsa -b 521 -N ""
 ssh-keygen -f /etc/ssh/key3ed25519 -t ed25519 -N ""
