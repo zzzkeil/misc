@@ -78,11 +78,7 @@ clear
 #
 echo "Set ufw config"
 ufw default deny incoming
-ufw default deny outgoing
 ufw allow $sshport/tcp
-ufw allow out 80
-ufw allow out 443
-ufw allow out 53
 clear
 #
 # fail2ban
