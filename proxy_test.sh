@@ -21,13 +21,13 @@ fi
 apt update
 apt install squid3 apache2-utils -y
 
-inet=$(ip route show default | awk '/default/ {print $5}')
+inet=$(hostname --ip-address | awk '{print $2}')
 echo "-----------------------------------------------------"
-read -p "proxy http_port" -e -i 53128 port
+read -p "proxy http_port : " -e -i 53128 port
 echo "-----------------------------------------------------"
-read -p "proxy outgoing_address" -e -i $inet tcpout
+read -p "proxy outgoing_address : " -e -i $inet tcpout
 echo "-----------------------------------------------------"
-read -p "Username for proxy-loging" -e -i proxyuser001 user001
+read -p "Username for proxy-loging : " -e -i proxyuser001 user001
 echo "-----------------------------------------------------"
 
 
@@ -36,7 +36,7 @@ touch /etc/squid/passwords
 chmod 777 /etc/squid/passwords
 htpasswd -c /etc/squid/passwords $user001
 
-/usr/lib/squid3/basic_ncsa_auth /etc/squid/passwords
+#/usr/lib/squid3/basic_ncsa_auth /etc/squid/passwords
 
 mv /etc/squid/squid.conf /etc/squid/squid.conf.original
 
