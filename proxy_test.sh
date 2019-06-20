@@ -56,8 +56,8 @@ auth_param basic realm proxy
 auth_param basic children 5
 auth_param basic credentialsttl 60 minutes
 acl authenticated proxy_auth REQUIRED
-acl GOOD dstdomain .github.com
-http_access allow GOOD
+#acl GOOD dstdomain .github.com
+#http_access allow GOOD
 http_access allow authenticated
 http_access deny all
 " >> /etc/squid/squid.conf
