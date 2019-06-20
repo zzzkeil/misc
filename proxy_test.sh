@@ -45,11 +45,19 @@ http_port $port
 dns_v4_first on
 cache deny all
 forwarded_for delete
+request_header_access X-Forwarded-For deny all
+request_header_access From deny all
+request_header_access Referer deny all
+request_header_access User-Agent deny all
 tcp_outgoing_address $tcpout
 via off
 auth_param basic program /usr/lib/squid3/basic_ncsa_auth /etc/squid/passwords
 auth_param basic realm proxy
+auth_param basic children 5
+auth_param basic credentialsttl 60 minutes
 acl authenticated proxy_auth REQUIRED
+acl GOOD dstdomain .github.com
+http_access allow GOOD
 http_access allow authenticated
 http_access deny all
 " >> /etc/squid/squid.conf
