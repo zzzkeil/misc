@@ -58,5 +58,5 @@ nano /etc/squid/squid.conf
 
 
 ufw allow $port
-ufw relaod
+ufw reload
 service squid restart
