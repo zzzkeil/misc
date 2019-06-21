@@ -119,6 +119,13 @@ Unattended-Upgrade::Automatic-Reboot "true";
 Unattended-Upgrade::Automatic-Reboot-Time "02:22";
 ' >> /etc/apt/apt.conf.d/50unattended-upgrades
 nano /etc/apt/apt.conf.d/50unattended-upgrades
+
+echo 'APT::Periodic::Update-Package-Lists "1";
+APT::Periodic::Download-Upgradeable-Packages "1";
+APT::Periodic::AutocleanInterval "7";
+APT::Periodic::Unattended-Upgrade "1";'
+>> /etc/apt/apt.conf.d/20auto-upgrades
+nano /etc/apt/apt.conf.d/20auto-upgrades
 clear
 #
 #misc
