@@ -130,10 +130,16 @@ clear
 #
 #misc
 #
-echo "Clear some stuff"
+echo "Clear/Change some stuff"
 chmod -x /etc/update-motd.d/10-help-text
 chmod -x /etc/update-motd.d/50-motd-news
 chmod -x /etc/update-motd.d/80-livepatch
+
+echo '#!/bin/sh
+runtime1=$(uptime -s)
+runtime2=$(uptime -p)
+echo "System uptime : $runtime1  / $runtime2 "
+' >> /etc/update-motd.d/99-uptime
 clear
 #
 # END
