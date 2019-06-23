@@ -126,6 +126,9 @@ APT::Periodic::AutocleanInterval "7";
 APT::Periodic::Unattended-Upgrade "1";'
 >> /etc/apt/apt.conf.d/20auto-upgrades
 nano /etc/apt/apt.conf.d/20auto-upgrades
+sed -i "s@6,18:00@9,23:00@" /lib/systemd/system/apt-daily.timer
+sed -i "s@12h@1h@" /lib/systemd/system/apt-daily.timer
+sed -i "s@6:00@1:00@" /lib/systemd/system/apt-daily-upgrade.timer
 clear
 #
 #misc
