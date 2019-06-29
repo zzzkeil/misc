@@ -93,8 +93,8 @@ logpath = /var/log/auth.log
 backend = %(sshd_backend)s
 maxretry = 3
 banaction = ufw
-findtime = 3600
-bantime = 172800
+findtime = 1d
+bantime = 18w
 " >> /etc/fail2ban/jail.d/ssh.conf
 sed -i "/blocktype = reject/c\blocktype = deny" /etc/fail2ban/action.d/ufw.conf
 clear
