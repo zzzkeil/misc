@@ -143,6 +143,7 @@ runtime1=$(uptime -s)
 runtime2=$(uptime -p)
 echo "System uptime : $runtime1  / $runtime2 "
 ' >> /etc/update-motd.d/99-uptime
+chmod +x /etc/update-motd.d/99-uptime
 clear
 #
 # END
