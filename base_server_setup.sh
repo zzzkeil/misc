@@ -118,14 +118,18 @@ Unattended-Upgrade::Remove-Unused-Dependencies "true";
 Unattended-Upgrade::Automatic-Reboot "true";
 Unattended-Upgrade::Automatic-Reboot-Time "02:22";
 ' >> /etc/apt/apt.conf.d/50unattended-upgrades
-nano /etc/apt/apt.conf.d/50unattended-upgrades
 
-echo 'APT::Periodic::Update-Package-Lists "1";
+echo '
+APT::Periodic::Update-Package-Lists "1";
 APT::Periodic::Download-Upgradeable-Packages "1";
 APT::Periodic::AutocleanInterval "7";
-APT::Periodic::Unattended-Upgrade "1";'
->> /etc/apt/apt.conf.d/20auto-upgrades
+APT::Periodic::Unattended-Upgrade "1";
+' >> /etc/apt/apt.conf.d/20auto-upgrades
+
+
+nano /etc/apt/apt.conf.d/50unattended-upgrades
 nano /etc/apt/apt.conf.d/20auto-upgrades
+
 sed -i "s@6,18:00@9,23:00@" /lib/systemd/system/apt-daily.timer
 sed -i "s@12h@1h@" /lib/systemd/system/apt-daily.timer
 sed -i "s@6:00@1:00@" /lib/systemd/system/apt-daily-upgrade.timer
