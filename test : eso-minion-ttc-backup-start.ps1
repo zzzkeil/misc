@@ -97,8 +97,6 @@ if($datetime.DayOfWeek -match 'Wednesday|Friday|Sunday'){
 }else{
 }
 
-
-
 }
 
 
