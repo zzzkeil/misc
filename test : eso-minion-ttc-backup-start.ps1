@@ -89,6 +89,19 @@ exit
 }
 
 
+function ttcuploadreminder {
+
+$datetime=[datetime]::Today
+if($datetime.DayOfWeek -match 'Wednesday|Friday|Sunday'){
+   start https://eu.tamrieltradecentre.com/pc/Trade/WebClient
+}else{
+}
+
+
+
+}
+
+
 
 checkttczip
 datettczip
@@ -96,3 +109,4 @@ unzipttczip
 startesominion
 #backupconfig
 #timetoexit
+#ttcuploadreminder
