@@ -153,8 +153,13 @@ echo '#!/bin/sh
 runtime1=$(uptime -s)
 runtime2=$(uptime -p)
 echo "System uptime : $runtime1  / $runtime2 "
-' >> /etc/update-motd.d/99-uptime
-chmod +x /etc/update-motd.d/99-uptime
+echo ""
+stamp="/var/lib/update-notifier/updates-available"
+
+[ ! -r "$stamp" ] || cat "$stamp"
+echo ""
+' >> /etc/update-motd.d/99-uptimeupdate
+chmod +x /etc/update-motd.d/99-uptimeupdate
 clear
 #
 # END
