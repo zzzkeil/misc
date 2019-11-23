@@ -1,10 +1,11 @@
 #!/bin/bash
 clear
-echo " ###########################################"
-echo " # Setup server config Netcup Ubuntu 18.04 #"
-echo " # passwd,ssh,fail2ban,ufw,network,updates #"
-echo " # !!!!!!!!!! Automatic reboot !!!!!!!!!!! #"
-echo " ###########################################"
+echo " #############################################"
+echo " # Setup server config Netcup Ubuntu 18.04   #"
+echo " # Setup server config Netcup Debian 10 test #"
+echo " # passwd,ssh,fail2ban,ufw,network,updates   #"
+echo " # !!!!!!!!!! Automatic reboot !!!!!!!!!!!   #"
+echo " #############################################"
 echo ""
 echo ""
 echo "To EXIT this script press  [ENTER]"
@@ -27,7 +28,7 @@ fi
 #
 echo "apt update and install"
 apt update && apt upgrade -y && apt autoremove -y
-apt install ufw fail2ban -y 
+apt install ufw fail2ban  unattended-upgrades apt-listchanges -y 
 mkdir /root/script_backupfiles/
 clear
 #
@@ -71,7 +72,13 @@ clear
 echo "Set network config"
 read -p "Your hostname :" -e -i remotehost hostnamex
 hostnamectl set-hostname $hostnamex
-nano /etc/netplan/50-cloud-init.yaml
+if [ -f "/etc/netplan/50-cloud-init.yaml" ]; then
+    nano /etc/netplan/50-cloud-init.yaml
+fi
+if [ -f "/etc/network/interfaces.d/50-cloud-init.cfg" ]; then
+   nano /etc/network/interfaces.d/50-cloud-init.cfg
+fi
+
 clear
 #
 # UFW
