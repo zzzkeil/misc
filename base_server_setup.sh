@@ -162,10 +162,6 @@ runtime2=$(uptime -p)
 totalban1=$(zgrep 'Ban' /var/log/fail2ban.log* | wc -l)
 echo "System uptime : $runtime1  / $runtime2 "
 echo ""
-stamp="/var/lib/update-notifier/updates-available"
-
-[ ! -r "$stamp" ] || cat "$stamp"
-echo ""
 echo "Total banned IPs from fail2ban : $totalban1 "
 ' >> /etc/update-motd.d/99-base01
 chmod +x /etc/update-motd.d/99-base01
