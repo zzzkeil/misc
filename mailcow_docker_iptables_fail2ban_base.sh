@@ -64,6 +64,7 @@ banaction = iptables-allports
 findtime = 1d
 bantime = 18w
 " >> /etc/fail2ban/jail.d/ssh.conf
+mv /etc/fail2ban/jail.d/defaults-debian.conf /etc/fail2ban/jail.d/defaults-debian.conf.bak
 systemctl enable fail2ban.service
 clear
 cd /opt
