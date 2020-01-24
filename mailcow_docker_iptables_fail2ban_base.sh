@@ -33,7 +33,6 @@ fi
 echo "apt update and install"
 apt update && apt upgrade -y && apt autoremove -y
 apt install fail2ban -y 
-mkdir /root/script_backupfiles/
 clear
 echo " Make sure you use the right SSH port now ! "
 read -p "Choose your SSH Port: (default 22) " -e -i 22 sshport
