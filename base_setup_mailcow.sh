@@ -36,6 +36,14 @@ apt install ufw fail2ban  unattended-upgrades apt-listchanges -y
 mkdir /root/script_backupfiles/
 clear
 #
+# mailcow docker setup
+#
+curl -sSL https://get.docker.com/ | CHANNEL=stable sh
+systemctl enable docker.service
+systemctl start docker.service
+curl -L https://github.com/docker/compose/releases/download/$(curl -Ls https://www.servercow.de/docker-compose/latest.php)/docker-compose-$(uname -s)-$(uname -m) > /usr/local/bin/docker-compose
+chmod +x /usr/local/bin/docker-compose
+#
 # Password
 #
 echo "Set root password"
@@ -87,9 +95,8 @@ clear
 #
 # UFW
 #
-echo "Set ufw config"
+echo "Set ufw config for with docker"
 sed -i 's/DEFAULT_FORWARD_POLICY="DROP"/DEFAULT_FORWARD_POLICY="ACCEPT"/' /etc/default/ufw
-
 echo"
 *nat
 :POSTROUTING ACCEPT [0:0]
@@ -102,11 +109,25 @@ echo"
 -A POSTROUTING ! -o docker0 -s fd4d:6169:6c63:6f77::/64 -j MASQUERADE
 COMMIT
 " >> /etc/ufw/after6.rules
-
 ufw default deny incoming
 ufw allow $sshport/tcp
-ufw allow $sshport/tcp
+ufw allow 25/tcp
+ufw allow 80/tcp
+ufw allow 110/tcp
+ufw allow 143/tcp
+ufw allow 443/tcp
+ufw allow 465/tcp
+ufw allow 587/tcp
+ufw allow 993/tcp
+ufw allow 995/tcp
+
+echo"
+{
+    "iptables": false
+}
+" > /etc/docker/daemon.json
 clear
+systemctl restart docker.service
 #
 # fail2ban
 #
