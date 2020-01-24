@@ -75,6 +75,7 @@ ufw allow 465/tcp
 ufw allow 587/tcp
 ufw allow 993/tcp
 ufw allow 995/tcp
+ufw allow 4190/tcp
 echo"
 {
     "iptables": false
