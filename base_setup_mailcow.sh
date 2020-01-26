@@ -102,13 +102,13 @@ echo"
 :POSTROUTING ACCEPT [0:0]
 -A POSTROUTING ! -o docker0 -s 172.22.1.0/24 -j MASQUERADE
 COMMIT
-" > /etc/ufw/after.rules
+" >> /etc/ufw/after.rules
 echo"
 *nat
 :POSTROUTING ACCEPT [0:0]
 -A POSTROUTING ! -o docker0 -s fd4d:6169:6c63:6f77::/64 -j MASQUERADE
 COMMIT
-" > /etc/ufw/after6.rules
+" >> /etc/ufw/after6.rules
 ufw default deny incoming
 ufw allow $sshport/tcp
 ufw allow 25/tcp
