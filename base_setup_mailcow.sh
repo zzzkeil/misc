@@ -97,18 +97,17 @@ clear
 #
 echo "Set ufw config for with docker"
 sed -i 's/DEFAULT_FORWARD_POLICY="DROP"/DEFAULT_FORWARD_POLICY="ACCEPT"/' /etc/default/ufw
-echo"
-*nat
-:POSTROUTING ACCEPT [0:0]
--A POSTROUTING ! -o docker0 -s 172.22.1.0/24 -j MASQUERADE
-COMMIT
-" >> /etc/ufw/after.rules
-echo"
-*nat
-:POSTROUTING ACCEPT [0:0]
+
+sed -i '1i*nat \
+:POSTROUTING ACCEPT [0:0] \
+-A POSTROUTING ! -o docker0 -s 172.22.1.0/24 -j MASQUERADE \
+COMMIT' /etc/ufw/after.rules
+
+sed -i '1i*nat \
+:POSTROUTING ACCEPT [0:0] \
 -A POSTROUTING ! -o docker0 -s fd4d:6169:6c63:6f77::/64 -j MASQUERADE
-COMMIT
-" >> /etc/ufw/after6.rules
+COMMIT' /etc/ufw/after6.rules
+
 ufw default deny incoming
 ufw allow $sshport/tcp
 ufw allow 25/tcp
