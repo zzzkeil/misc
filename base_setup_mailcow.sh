@@ -203,6 +203,8 @@ clear
 # END
 #
 systemctl enable fail2ban.service
+cd /opt
+git clone https://github.com/mailcow/mailcow-dockerized
 read -p "Press enter to reboot"
 ufw --force enable
 ufw reload
