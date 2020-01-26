@@ -102,13 +102,13 @@ echo"
 :POSTROUTING ACCEPT [0:0]
 -A POSTROUTING ! -o docker0 -s 172.22.1.0/24 -j MASQUERADE
 COMMIT
-" >> /etc/ufw/after.rules
+" > /etc/ufw/after.rules
 echo"
 *nat
 :POSTROUTING ACCEPT [0:0]
 -A POSTROUTING ! -o docker0 -s fd4d:6169:6c63:6f77::/64 -j MASQUERADE
 COMMIT
-" >> /etc/ufw/after6.rules
+" > /etc/ufw/after6.rules
 ufw default deny incoming
 ufw allow $sshport/tcp
 ufw allow 25/tcp
@@ -120,7 +120,7 @@ ufw allow 465/tcp
 ufw allow 587/tcp
 ufw allow 993/tcp
 ufw allow 995/tcp
-
+ufw allow 4190/tcp
 echo"
 {
     "iptables": false
@@ -132,8 +132,7 @@ systemctl restart docker.service
 # fail2ban
 #
 echo "Set fail2ban for ssh"
-echo "
-[sshd]
+echo "[sshd]
 enabled = true
 port = $sshport
 filter = sshd
@@ -143,7 +142,7 @@ maxretry = 3
 banaction = ufw
 findtime = 1d
 bantime = 18w
-" >> /etc/fail2ban/jail.d/ssh.conf
+" > /etc/fail2ban/jail.d/ssh.conf
 sed -i "/blocktype = reject/c\blocktype = deny" /etc/fail2ban/action.d/ufw.conf
 clear
 #
