@@ -3,6 +3,10 @@
 read -p "teamspeak version nummer (e.g. 3.8.0) : " -e -i 3.12.1 tsversion
 read -p "teamspeak arch (amd64 or ) : " -e -i amd64 tsarch
 read -p "teamspeak-service username : " -e -i tsuserservice tsserver
+read -p "default_voice_port : " -e -i 9987 dvp
+read -p "filetransfer_port : " -e -i 30033 ftp
+read -p "query_port : " -e -i 10011 qp
+read -p "query_ssh_port : " -e -i 10022 qpssh
 mkdir /opt/teamspeak
 ln -s /opt/teamspeak/ /root/teamspeak_folder
 cd /opt/teamspeak
@@ -32,6 +36,35 @@ Restart=always
 WantedBy=multi-user.target
 " >> /etc/systemd/system/teamspeak-server.service
 
+echo "
+machine_id=
+default_voice_port=$dvp
+voice_ip=0.0.0.0, ::
+licensepath=
+filetransfer_port=$ftp
+filetransfer_ip=0.0.0.0, ::
+query_port=$qp
+query_ip=0.0.0.0, ::
+query_ip_whitelist=query_ip_whitelist.txt
+query_ssh_ip=0.0.0.0,::
+query_ssh_port=$qpssh
+dbplugin=ts3db_sqlite3
+dbpluginparameter=
+dbsqlpath=sql/
+dbsqlcreatepath=create_sqlite/
+dblogkeepdays=120
+logpath=logs/
+logquerycommands=0
+dbclientkeepdays=360
+" >> /opt/teamspeak/teamspeak3-server_linux_$tsarch/ts3server.ini
+chown -R tsuserservice /opt/teamspeak/teamspeak3-server_linux_$tsarch/ts3server.ini
+
+
+ufw allow $dvp/udp
+ufw allow $ftp/tcp
+ufw allow $qp/tcp
+ufw allow $qpssh/tcp
+ufw reload
 
 systemctl enable teamspeak-server
 
