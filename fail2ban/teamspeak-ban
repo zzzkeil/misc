@@ -1,0 +1,23 @@
+
+/etc/fail2ban/jail.d/teamspeak-ban.conf
+[teamspeak-ban]
+enabled = true
+port = all
+protocol = all
+filter = 01teamspeak-ban
+logpath = /opt/teamspeak/teamspeak3-server_linux_amd64/logs/ts3server*.log
+maxLines = 1
+maxretry = 0
+findtime = 1d
+bantime = 90d
+action = %(action_)s
+banaction = ufw
+
+
+
+/etc/fail2ban/filter.d/01teamspeak-ban.conf
+[INCLUDES]
+before = common.conf
+[Definition]
+failregex = ^.*ban.*ip='(<ADDR>)' bantime=0.*
+ignoreregex = 
