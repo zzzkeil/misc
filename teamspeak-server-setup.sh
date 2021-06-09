@@ -1,6 +1,6 @@
 #!/bin/bash
 
-read -p "teamspeak version nummer (e.g. 3.8.0) : " -e -i 3.12.1 tsversion
+read -p "teamspeak version nummer (e.g. 3.13.5) : " -e -i 3.13.5 tsversion
 read -p "teamspeak arch (amd64 or ) : " -e -i amd64 tsarch
 read -p "teamspeak-service username : " -e -i tsuserservice tsserver
 read -p "default_voice_port : " -e -i 9987 dvp
