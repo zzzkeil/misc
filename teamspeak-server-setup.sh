@@ -1,6 +1,6 @@
 #!/bin/bash
 
-read -p "teamspeak version nummer (e.g. 3.13.5) : " -e -i 3.13.5 tsversion
+read -p "teamspeak version nummer (e.g. 3.13.5) : " -e -i 3.13.6 tsversion
 read -p "teamspeak arch (amd64 or ) : " -e -i amd64 tsarch
 read -p "teamspeak-service username : " -e -i tsuserservice tsserver
 read -p "default_voice_port : " -e -i 9987 dvp
@@ -57,7 +57,7 @@ logpath=logs/
 logquerycommands=0
 dbclientkeepdays=360
 " >> /opt/teamspeak/teamspeak3-server_linux_$tsarch/ts3server.ini
-chown -R tsuserservice /opt/teamspeak/teamspeak3-server_linux_$tsarch/ts3server.ini
+chown -R $tsserver /opt/teamspeak/teamspeak3-server_linux_$tsarch/ts3server.ini
 
 
 ufw allow $dvp/udp
