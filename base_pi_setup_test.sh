@@ -255,6 +255,16 @@ echo "base_server script installed from :
 https://github.com/zzzkeil/base_setups
 " > /root/base_setup.README
 
+
+
+#
+# remove user pi
+#
+
+rm -vf /etc/sudoers.d/010_pi-nopasswd
+deluser -remove-home pi
+
+
 #
 # END
 #
