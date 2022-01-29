@@ -25,6 +25,11 @@ echo -e " ${GRAYB}#${ENDCOLOR}                 Version 2022.01.29 - changelog on
 echo -e " ${GRAYB}##############################################################################${ENDCOLOR}"
 echo ""
 echo ""
+
+echo -e " ${GRAYB}##############################################################################${ENDCOLOR}"
+echo -e " ${GRAYB}#${ENDCOLOR}                 You need to run this as root  with   sudo -i               ${GRAYB}#${ENDCOLOR}"
+echo -e " ${GRAYB}##############################################################################${ENDCOLOR}"
+
 echo ""
 echo  -e "                    ${RED}To EXIT this script press any key${ENDCOLOR}"
 echo ""
@@ -42,7 +47,7 @@ fi
 #
 
 if [[ "$EUID" -ne 0 ]]; then
-	echo -e "${RED}Sorry, you need to run this as root${ENDCOLOR}"
+	echo -e "${RED}Sorry, you need to run this as root with  sudo -i  ${ENDCOLOR}"
 	exit 1
 fi
 
