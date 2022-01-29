@@ -37,6 +37,7 @@ then
     exit 1
 fi
 
+sudo -i
 
 #
 # check if Debian 
@@ -56,9 +57,9 @@ fi
 #
 
 echo -e "${GREEN}apt update upgrade and install ${ENDCOLOR}"
-sudo apt update && sudo apt upgrade -y && apt autoremove -y
-sudo apt install ufw fail2ban  unattended-upgrades apt-listchanges -y 
-sudo mkdir /tmp/script_backupfiles/
+apt update && apt upgrade -y && apt autoremove -y
+apt install ufw fail2ban  unattended-upgrades apt-listchanges -y 
+mkdir /tmp/script_backupfiles/
 clear
 
 #
@@ -119,9 +120,9 @@ fi
 
 echo -e "${GREEN}Set ssh config  ${ENDCOLOR}"
 read -p "Choose your SSH Port: (default 22) " -e -i 2222 sshport
-ssh-keygen -f /etc/ssh/key1rsa -t rsa -b 4096 -N ""
-ssh-keygen -f /etc/ssh/key2ecdsa -t ecdsa -b 521 -N ""
-ssh-keygen -f /etc/ssh/key3ed25519 -t ed25519 -N ""
+sudo ssh-keygen -f /etc/ssh/key1rsa -t rsa -b 4096 -N ""
+sudo ssh-keygen -f /etc/ssh/key2ecdsa -t ecdsa -b 521 -N ""
+sudo ssh-keygen -f /etc/ssh/key3ed25519 -t ed25519 -N ""
 
 mv /etc/ssh/sshd_config /root/script_backupfiles/sshd_config.orig
 echo "Port $sshport
@@ -147,12 +148,8 @@ clear
 echo -e "${GREEN}Set network config  ${ENDCOLOR}"
 read -p "Your hostname :" -e -i remotehost hostnamex
 hostnamectl set-hostname $hostnamex
-if [ -f "/etc/netplan/50-cloud-init.yaml" ]; then
-    nano /etc/netplan/50-cloud-init.yaml
-fi
-if [ -f "/etc/network/interfaces.d/50-cloud-init.cfg" ]; then
-   nano /etc/network/interfaces.d/50-cloud-init.cfg
-fi
+nano /etc/dhcpcd.conf
+
 
 #
 # UFW
@@ -177,8 +174,8 @@ logpath = /var/log/auth.log
 backend = %(sshd_backend)s
 maxretry = 3
 banaction = ufw
-findtime = 1d
-bantime = 18w
+findtime = 1h
+bantime = 1d
 " >> /etc/fail2ban/jail.d/ssh.conf
 sed -i "/blocktype = reject/c\blocktype = deny" /etc/fail2ban/action.d/ufw.conf
 clear
@@ -262,6 +259,14 @@ if [[ "$newpass" -ne 0 ]]; then
 echo -e " ${YELLOW}!!! REMEMBER - you set a new root password :"
 echo  ""
 echo -e "${GREEN}$randompasswd${ENDCOLOR}  <<< copy your new green password "
+echo ""
+echo -e " ${RED}if you not save this password, you can never loggin again, be carefull ${ENDCOLOR}"
+echo ""
+echo ""
+else
+echo -e " ${YELLOW}!!! REMEMBER - you set a new root password :"
+echo  ""
+echo -e "${GREEN}$yourpasswd${ENDCOLOR}  <<< copy your new green password "
 echo ""
 echo -e " ${RED}if you not save this password, you can never loggin again, be carefull ${ENDCOLOR}"
 echo ""
