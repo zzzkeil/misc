@@ -120,9 +120,9 @@ fi
 
 echo -e "${GREEN}Set ssh config  ${ENDCOLOR}"
 read -p "Choose your SSH Port: (default 22) " -e -i 2222 sshport
-sudo ssh-keygen -f /etc/ssh/key1rsa -t rsa -b 4096 -N ""
-sudo ssh-keygen -f /etc/ssh/key2ecdsa -t ecdsa -b 521 -N ""
-sudo ssh-keygen -f /etc/ssh/key3ed25519 -t ed25519 -N ""
+ssh-keygen -f /etc/ssh/key1rsa -t rsa -b 4096 -N ""
+ssh-keygen -f /etc/ssh/key2ecdsa -t ecdsa -b 521 -N ""
+ssh-keygen -f /etc/ssh/key3ed25519 -t ed25519 -N ""
 
 mv /etc/ssh/sshd_config /root/script_backupfiles/sshd_config.orig
 echo "Port $sshport
