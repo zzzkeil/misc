@@ -37,7 +37,15 @@ then
     exit 1
 fi
 
-sudo -i
+#
+#root check
+#
+
+if [[ "$EUID" -ne 0 ]]; then
+	echo -e "${RED}Sorry, you need to run this as root${ENDCOLOR}"
+	exit 1
+fi
+
 
 #
 # check if Debian 
