@@ -72,7 +72,7 @@ fi
 echo -e "${GREEN}apt update upgrade and install ${ENDCOLOR}"
 apt update && apt upgrade -y && apt autoremove -y
 apt install ufw fail2ban  unattended-upgrades apt-listchanges -y 
-mkdir /tmp/script_backupfiles/
+mkdir /root/script_backupfiles/
 clear
 
 #
