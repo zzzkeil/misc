@@ -1,6 +1,6 @@
 apt install ipset
 
-curl -o torblacklist https://raw.githubusercontent.com/SecOps-Institute/Tor-IP-Addresses/master/tor-exit-nodes.lst
+curl -o torblacklist https://raw.githubusercontent.com/X4BNet/lists_torexit/main/ipv4.txt
 curl -o vpnblacklist https://raw.githubusercontent.com/X4BNet/lists_vpn/main/output/vpn/ipv4.txt
 ipset create torblacklist hash:ip hashsize 4096 maxelem 1000000
 ipset create vpnblacklist hash:ip hashsize 4096 maxelem 1000000
@@ -11,14 +11,14 @@ ipset create vpnblacklist hash:ip hashsize 4096 maxelem 1000000
 while read line; 
 do 
         ipset add torblacklist $line; 
-done < /root/blacklist
+done < /root/torblacklist
 
 
 
 
 add
-iptables -I INPUT -m set --match-set vpnblacklist src -j DROP
-iptables -I FORWARD -m set --match-set vpnblacklist src -j DROP
+iptables -I INPUT -m set --match-set torblacklist src -j DROP
+iptables -I FORWARD -m set --match-set torblacklist src -j DROP
 
 del
 iptables -D INPUT -m set --match-set blacklist src -j DROP
