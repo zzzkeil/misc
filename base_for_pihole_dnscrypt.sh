@@ -277,7 +277,6 @@ deluser -remove-home pi
 # END
 #
 
-systemctl enable fail2ban.service
 clear
 echo ""
 echo ""
