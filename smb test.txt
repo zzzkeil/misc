@@ -3,19 +3,20 @@ samba notizen  test
 
 apt install samba
 
-
-groupadd smbusers
-mkdir /home/smbusers
-chgrp smbusers /home/smbusers
-chmod 770 /home/smbusers
-
-adduser sharemal
-smbpasswd -a sharemal
-usermod -aG smbusers sharemal
+useradd -s /bin/false smbuser
+smbpasswd -a smbuser
+mkdir /home/smbshare
 
 
 
 nano /etc/samba/smb.conf
+
+
+workgroup = smb
+security = user
+map to guest = never
+
+
 
 mindestens
 
@@ -56,16 +57,23 @@ oder mehr
 
 die shares
 
-[smbusers]
-   security = user
-   path = /home/smbusers
-   writable = yes
-   guest ok = no
-   valid users = @smbusers
-   force group = smbusers
-   force create mode = 770
-   force directory mode = 770
-   inherit permissions = yes 
+[homes]
+comment = Home Directories
+browsable = no
+read only = no
+create mode = 0750
+
+
+[restricted]
+valid users = smbuser
+path = /home/smbshare
+public = no
+writable = yes
+comment = smb restricted share
+printable = no
+guest ok = no
+create mask = 0600
+directory mask = 0700
 
 
 
