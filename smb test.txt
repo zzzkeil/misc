@@ -2,12 +2,20 @@ samba notizen  test
 
 
 apt install samba
-nano /etc/samba/smb.conf
+
 
 groupadd smbusers
 mkdir /home/smbusers
 chgrp smbusers /home/smbusers
 chmod 770 /home/smbusers
+
+adduser sharemal
+smbpasswd -a sharemal
+usermod -aG smbusers sharemal
+
+
+
+nano /etc/samba/smb.conf
 
 mindestens
 
@@ -59,4 +67,10 @@ die shares
    force directory mode = 770
    inherit permissions = yes 
 
-root@smb:~# systemctl restart smbd
+
+
+
+
+
+
+systemctl restart smbd
