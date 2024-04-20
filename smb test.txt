@@ -1,0 +1,62 @@
+samba notizen  test
+
+
+apt install samba
+nano /etc/samba/smb.conf
+
+groupadd smbusers
+mkdir /home/smbusers
+chgrp smbusers /home/smbusers
+chmod 770 /home/smbusers
+
+mindestens
+
+   server signing = mandatory
+   server min protocol = SMB3
+   server smb encrypt = required
+
+oder mehr 
+
+
+ [global]
+    server min protocol = SMB3_11
+    server smb encrypt = required
+    server signing = mandatory
+    server smb3 encryption algorithms = AES-256-GCM
+    server smb3 signing algorithms = AES-128-GMAC
+#   server smb3 encryption algorithms = AES-128-GCM, AES-128-CCM, AES-256-GCM, AES-256-CCM
+#   server smb3 signing algorithms = AES-128-GMAC, AES-128-CMAC, HMAC-SHA256
+
+    client min protocol = SMB3_11
+    client smb encrypt = required
+    client signing = required
+    client ipc signing  = required
+    client protection = encrypt
+    client smb3 encryption algorithms = AES-256-GCM
+    client smb3 signing algorithms = AES-128-GMAC
+#   client smb3 encryption algorithms = AES-128-GCM, AES-128-CCM, AES-256-GCM, AES-256-CCM
+#   client smb3 signing algorithms = AES-128-GMAC, AES-128-CMAC, HMAC-SHA256
+
+
+   hosts allow = 192.168.0.0/255.255.255.0
+
+    max log size = 0
+    log level = 0 vfs:10
+    log file = /var/log/samba/sambavfs.log
+
+
+
+die shares
+
+[smbusers]
+   security = user
+   path = /home/smbusers
+   writable = yes
+   guest ok = no
+   valid users = @smbusers
+   force group = smbusers
+   force create mode = 770
+   force directory mode = 770
+   inherit permissions = yes 
+
+root@smb:~# systemctl restart smbd
