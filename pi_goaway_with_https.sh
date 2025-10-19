@@ -143,8 +143,13 @@ networks:
   default:
 ' > /opt/goaway/compose.yaml
 
-cd /opt/goaway
-
-echo " cd /opt/goaway > docker compose up > password notes  / docker compose up -d  and  docker compose down"
+echo " ###############################################"
+echo " run after relogin:"
+echo " cd /opt/goaway ; docker compose up"
+echo " save your password from logs and press  ctrl+c twice"
+echo " run docker compose up -d"
+echo " ###############################################"
+echo ""
 echo " relogin your user account:  $USER (needed for usermod -aG docker) "
+echo ""
 exec su -l $USER
