@@ -1,4 +1,22 @@
 #!/bin/bash
+echo " ###############################################"
+echo " This script installs goaway with https acccess "
+echo " docker: pommee/goaway:latest and nginx:latest"
+echo " Usecase: raspbeery pi on local network "
+echo " ###############################################"
+echo ""
+echo "   To EXIT this script press any key"
+echo ""
+echo "   Press [Y] to begin"
+read -p "" -n 1 -r
+echo ""
+echo ""
+if [[ ! $REPLY =~ ^[Yy]$ ]]
+then
+    exit 1
+fi
+
+
 sudo apt update ; sudo apt upgrade -y
 for pkg in docker.io docker-doc docker-compose podman-docker containerd runc; do sudo apt-get remove $pkg; done
 sudo apt-get update
