@@ -19,6 +19,9 @@ sudo mkdir /opt/goaway
 sudo mkdir /opt/goaway/config
 sudo mkdir /opt/goaway/data
 sudo chown -R $USER:$USER /opt/goaway
+sudo usermod -aG docker $USER
+exec su -l $USER
+
 
 echo '
 services:
@@ -45,4 +48,4 @@ services:
 
 cd /opt/goaway
 
-echo "docker composer up > password notes /  docker composer down  / docker composer up -d"
+echo "docker compose up > password notes /  docker compose down  / docker compose up -d"
