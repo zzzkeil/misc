@@ -13,15 +13,13 @@ echo \
   sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 sudo apt-get update
 
-sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
 
 sudo mkdir /opt/goaway
 sudo mkdir /opt/goaway/config
 sudo mkdir /opt/goaway/data
 sudo chown -R $USER:$USER /opt/goaway
 sudo usermod -aG docker $USER
-exec su -l $USER
-
 
 echo '
 services:
@@ -49,3 +47,4 @@ services:
 cd /opt/goaway
 
 echo "docker compose up > password notes /  docker compose down  / docker compose up -d"
+exec su -l $USER
