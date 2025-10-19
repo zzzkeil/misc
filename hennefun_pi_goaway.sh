@@ -68,10 +68,10 @@ server {
         # 'goaway' is the service name from the docker-compose file
         # 8080 is the internal WEBSITE_PORT for the goaway app
         proxy_pass http://goaway:8080;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header Host \$host;
+        proxy_set_header X-Real-IP \$remote_addr;
+        proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto \$scheme;
     }
 }
 
@@ -81,7 +81,7 @@ server {
     listen [::]:80;
     server_name $hostipv4;
 
-    return 301 https://$host$request_uri;
+    return 301 https://\$host\$request_uri;
 }
 
 " > /opt/goaway-proxy/nginx.conf
