@@ -16,10 +16,8 @@ then
     exit 1
 fi
 
-
-sudo apt update ; sudo apt upgrade -y
+#apt update/install/remove ...
 sudo apt-get remove docker.io docker-doc docker-compose podman-docker containerd runc -y
-sudo apt-get update
 sudo apt-get install ca-certificates curl
 sudo install -m 0755 -d /etc/apt/keyrings
 sudo curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc
@@ -29,20 +27,24 @@ echo \
   "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian \
   $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
   sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-sudo apt-get update
-
+  
+sudo apt-get update ; sudo apt-get upgrade -y
 sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
 
+#add user to docker
+sudo usermod -aG docker $USER
 
+#mkdirs and chwon
 sudo mkdir -p /opt/goaway-proxy/certs
 sudo mkdir -p /opt/goaway/config
 sudo mkdir -p /opt/goaway/data
 sudo chown -R $USER:$USER /opt/goaway-proxy
 sudo chown -R $USER:$USER /opt/goaway
-sudo usermod -aG docker $USER
 
+#get ipv4 from host
 hostipv4=$(hostname -I | awk '{print $1}')
 
+#make config/compose files
 echo "
 [req]
 distinguished_name = req_distinguished_name
@@ -143,6 +145,8 @@ networks:
   default:
 ' > /opt/goaway/compose.yaml
 
+
+#end
 echo " ###############################################"
 echo " run after relogin:"
 echo " cd /opt/goaway ; docker compose up"
