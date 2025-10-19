@@ -19,6 +19,7 @@ sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin 
 sudo mkdir -p /opt/goaway-proxy/certs
 sudo mkdir -p /opt/goaway/config
 sudo mkdir -p /opt/goaway/data
+sudo chown -R $USER:$USER /opt/goaway-proxy
 sudo chown -R $USER:$USER /opt/goaway
 sudo usermod -aG docker $USER
 
