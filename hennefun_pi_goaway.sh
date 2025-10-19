@@ -15,9 +15,10 @@ sudo apt-get update
 
 sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
-mkdir /opt/goaway
-mkdir /opt/goaway/config
-mkdir /opt/goaway/data
+sudo mkdir /opt/goaway
+sudo mkdir /opt/goaway/config
+sudo mkdir /opt/goaway/data
+sudo chown -R $USER:$USER /opt/goaway
 
 echo '
 services:
