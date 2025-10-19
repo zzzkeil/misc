@@ -128,4 +128,5 @@ networks:
 cd /opt/goaway
 
 echo "docker compose up > password notes /  docker compose down  / docker compose up -d"
+echo " relogin your user account:  $USER (needed for usermod -aG docker) "
 exec su -l $USER
