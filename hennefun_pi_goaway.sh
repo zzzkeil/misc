@@ -41,7 +41,6 @@ services:
     cap_add:
       - NET_BIND_SERVICE
       - NET_RAW
-      
 ' > /opt/goaway/compose.yaml
 
 cd /opt/goaway
