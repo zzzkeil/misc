@@ -5,6 +5,8 @@ exit 1
 fi
 apt-get update ; apt-get upgrade -y
 apt-get install unattended-upgrades apt-listchanges -y
+echo ""
+echo ""
 read -p "set sshport to: " sshport
 dpkg-reconfigure tzdata
 
